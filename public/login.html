@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+    }
+    
+    .footer {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      font-size: 14px;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+    }
+    
+    .content {
+      padding: 20px;
+      margin-top: 40px; 
+      margin-bottom: 40px;
+    }
+    
+    .form-container {
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #555;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+  
+    .form-group button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    
+    @media screen and (max-width: 600px) {
+      .form-container {
+        max-width: 100%;
+      }
+    }
+
+    @font-face {
+  font-family: 'Montserrat';
+  src: url('font/Montserrat-Regular.ttf') format('truetype');
+  
+  }
+
+  </style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" type="text/css" href="menu.css">
+
+<script>
+  $(document).ready(function () { 
+    const form = document.querySelector('.form-container');
+    const submitButton = document.querySelector('#submit-button');
+
+      submitButton.addEventListener('click', function(event) {
+      console.log
+      event.preventDefault();
+
+      const password = document.getElementById('password').value;
+      const email = document.getElementById('email').value;
+
+      const formData = {
+        password: password,
+        email: email
+      };
+      
+      fetch('http://localhost:3000/user/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          sessionStorage.setItem("UserSession", JSON.stringify(data.user));
+
+          if(data.user.Role == "admin"){
+            window.location.href = "devOpsLearningPoints.html";
+          } else {
+            window.location.href = "form.html";
+          }
+          
+        })
+        .catch(error => {
+          console.error('Erro:', error);
+        });
+    });
+  });
+
+</script>
+
+</head>
+<body>
+  <div class="navbar">
+    <a class="navbar-logo" href="#">
+      <img src="logo/DevOps Mentor (1).png" alt="DevOps Mentor Logo">
+      <p style="font-family: 'Montserrat', sans-serif;">DevOps Mentor</p>
+    </a>
+    <ul class="navbar-menu">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Courses</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    
+    <div class="navbar-profile">
+      <a href="#">
+        <img src="img/perfilVazio.jpg" alt="User Avatar">
+        Login
+      </a>
+    </div>
+    
+    <div class="navbar-burger" id="navbar-burger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+<div class="content">
+  <div class="form-container">
+    <div class="form-group">
+      <label for="email">E-mail:</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+    </div>
+    <div class="form-group">
+      <button type="submit" id="submit-button">Enviar</button>
+    </div>
+    <div class="registration-link">
+      Não tem uma conta DevOps Mentor?
+      <a href="index.html"> Cadastrar</a>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+&copy; 2023 DevOps Mentor - Todos os direitos reservados.
+</footer>
+
+</body>
+</html>

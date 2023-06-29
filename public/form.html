@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Formulário DevOps Learning Points</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+    }
+    
+    .footer {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      font-size: 14px;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+    }
+    
+    .content {
+      padding: 20px;
+      margin-top: 40px;
+      margin-bottom: 40px;
+    }
+    
+    .form-container {
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #555;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    
+    .form-group .switch {
+      display: inline-block;
+      position: relative;
+      width: 50px;
+      height: 24px;
+    }
+    
+    .form-group .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .form-group .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      border-radius: 34px;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+    
+    .form-group .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      border-radius: 50%;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+    
+    .form-group input[type="checkbox"]:checked + .slider {
+      background-color: #5DB075;
+    }
+    
+    .form-group input[type="checkbox"]:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+    
+    .form-group button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    
+    @media screen and (max-width: 600px) {
+      .form-container {
+        max-width: 100%;
+      }
+    }
+
+    @font-face {
+  font-family: 'Montserrat';
+  src: url('font/Montserrat-Regular.ttf') format('truetype');
+
+  
+  }
+
+  </style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" type="text/css" href="menu.css">
+
+<script>
+  
+  const userLink = document.getElementById("userLink");
+
+  const usuarioJSON = sessionStorage.getItem("UserSession");
+
+  if (usuarioJSON) {
+
+    const nomeUsuario = JSON.parse(usuarioJSON).Name;
+    document.getElementById("userName").textContent = nomeUsuario;
+  }
+
+  $(document).ready(function () { 
+    const form = document.querySelector('.form-container');
+    const submitButton = document.querySelector('#submit-button');
+
+      submitButton.addEventListener('click', function(event) {
+      console.log
+      event.preventDefault();
+
+      const descricao = document.getElementById('descricao').value;
+      const theme = document.getElementById('theme').value;
+      const devopsSpecific = document.getElementById('devopsSpecific').checked;
+      const type = document.getElementById('type').value;
+
+      const formData = {
+        descricao: descricao,
+        theme: theme,
+        devopsSpecific: devopsSpecific,
+        type : type
+      };
+      
+      // Enviar os dados do formulário para o backend via AJAX
+      fetch('http://localhost:3000/devops-learning-points/cadastro', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+        })
+        .catch(error => {
+          console.error('Erro:', error);
+        });
+    });
+  });
+
+</script>
+
+</head>
+<body>
+  <div class="navbar">
+    <a class="navbar-logo" href="#">
+      <img src="logo/DevOps Mentor (1).png" alt="DevOps Mentor Logo">
+      <p style="font-family: 'Montserrat', sans-serif;">DevOps Mentor</p>
+    </a>
+    <ul class="navbar-menu">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Courses</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <div class="navbar-profile">
+      <a href="#">
+        <img src="img/perfil1.jpg" alt="User Avatar">
+        <p id="userName">John Doe</p>
+      </a>
+      <div class="navbar-profile-dropdown">
+        <a href="#">Profile</a>
+        <a href="#">Settings</a>
+        <a href="#">Logout</a>
+      </div>
+    </div>
+    <div class="navbar-burger" id="navbar-burger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+<div class="content">
+  <div class="form-container">
+    <div class="form-group">
+      <label for="descricao">Descrição:</label>
+      <textarea id="descricao" name="descricao" rows="5" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="theme">Tema:</label>
+      <select id="theme" name="theme" required>
+        <option value="">Selecione um tema</option>
+        <option value="Pedagogy">Pedagogy</option>
+        <option value="Curriculum">Curriculum</option>
+        <option value="Assessment">Assessment</option>
+        <option value="Tools">Tools</option>
+        <option value="Classes preparation">Classes preparation</option>
+        <option value="Devops concepts">Devops concepts</option>
+        <option value="Environment setup">Environment setup</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="type">Tipo:</label>
+      <select id="type" name="type" required>
+        <option value="">Selecione um tipo</option>
+        <option value="Challenge">Challenge</option>
+        <option value="Recomendation">Recomendation</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="devopsSpecific">DevOps Específico:</label>
+      <label class="switch">
+        <input type="checkbox" id="devopsSpecific" name="devopsSpecific" required>
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div class="form-group">
+      <button type="submit" id="submit-button">Enviar</button>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+&copy; 2023 DevOps Mentor - Todos os direitos reservados.
+</footer>
+
+</body>
+</html>

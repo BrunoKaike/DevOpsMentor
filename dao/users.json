@@ -1,0 +1,44 @@
+[
+  {
+    "Id": 1,
+    "Name": "Bruno Batista",
+    "Email": "bruno@gmail.com",
+    "Password": "123",
+    "Role": "admin"
+  },
+  {
+    "ID": 2,
+    "Name": "Teste",
+    "Email": "teste@gmail.com",
+    "Password": "123",
+    "Role": "client"
+  },
+  {
+    "ID": null,
+    "Name": "Teste",
+    "Email": "teste@gmail.com",
+    "Password": "123",
+    "Role": "client"
+  },
+  {
+    "ID": null,
+    "Name": "Teste",
+    "Email": "teste@gmail.com",
+    "Password": "123",
+    "Role": "client"
+  },
+  {
+    "ID": null,
+    "Name": "Teste",
+    "Email": "teste@gmail.com",
+    "Password": "123",
+    "Role": "client"
+  },
+  {
+    "ID": null,
+    "Name": "Teste",
+    "Email": "teste@gmail.com",
+    "Password": "123",
+    "Role": "client"
+  }
+]

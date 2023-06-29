@@ -1,0 +1,83 @@
+[
+  {
+    "Number": 2,
+    "Theme": "assessment",
+    "Descricao": "to evaluate students' work using realistic environment used by is difficult",
+    "DevOpsSpecific": "no",
+    "Links": 1,
+    "Type": "challenge",
+    "Status": "approved"
+  },
+  {
+    "Number": 3,
+    "Theme": "assessment",
+    "Descricao": "DevOps increases evaluation workload for teachers",
+    "DevOpsSpecific": "yes",
+    "Links": 2,
+    "Type": "challenge",
+    "Status": "rejected"
+  },
+  {
+    "Number": 4,
+    "Theme": "assessment",
+    "Descricao": "students quit the course because of evaluation",
+    "DevOpsSpecific": "no",
+    "Links": 1,
+    "Type": "challenge",
+    "Status": "pending"
+  },
+  {
+    "Number": 5,
+    "Theme": "assessment",
+    "Descricao": "assessement of previous students knowledge on agile was not good.",
+    "DevOpsSpecific": "no",
+    "Links": 0,
+    "Type": "challenge",
+    "Status": "pending"
+  },
+  {
+    "Number": 6,
+    "Theme": "assessment",
+    "Descricao": "Automated assessment of programming exercises is hard.",
+    "DevOpsSpecific": "no",
+    "Links": 4,
+    "Type": "challenge",
+    "Status": "pending"
+  },
+  {
+    "Number": 7,
+    "Theme": "assessment",
+    "Descricao": "the automated assessment elaboration take time",
+    "DevOpsSpecific": "no",
+    "Links": 0,
+    "Type": "challenge",
+    "Status": "pending"
+  },
+  {
+    "Number": 8,
+    "Theme": "assessment",
+    "Descricao": "assessment of complex exercises were done with code review instead of system execution.",
+    "DevOpsSpecific": "no",
+    "Links": 0,
+    "Type": "challenge",
+    "Status": "pending"
+  },
+  {
+    "Number": 9,
+    "Theme": "assessment",
+    "Descricao": "the ‘no deadline’ meant that the in-coming queue late in the course contained submissions from all iterations",
+    "DevOpsSpecific": "no",
+    "Links": 0,
+    "Type": "challenge",
+    "Status": "pending"
+  },
+  {
+    "Number": 10,
+    "Theme": "assessment",
+    "Descricao": "the ‘unlimited submission’ strategy had the unfortunate consequence of sloppy submissions",
+    "DevOpsSpecific": "no",
+    "Links": 0,
+    "Type": "challenge",
+    "Status": "pending"
+  }
+]

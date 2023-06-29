@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de DevOps Learning Points</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+    }
+    
+    .footer {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      font-size: 14px;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .learning-point {
+      margin-bottom: 20px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .learning-point p {
+      margin: 0 0 10px;
+    }
+    
+    .learning-point .actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+    
+    .learning-point .actions button {
+      margin-left: 10px;
+      padding: 5px 10px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .learning-point .actions button:hover {
+      background-color: #5DB075;
+    }
+    
+    .footer {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+    }
+    
+    .footer p {
+      margin: 0;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" type="text/css" href="menu.css">
+</head>
+<body>
+    <div class="navbar">
+        <a class="navbar-logo" href="#">
+          <img src="logo/DevOps Mentor (1).png" alt="DevOps Mentor Logo">
+          <p style="font-family: 'Montserrat', sans-serif;">DevOps Mentor</p>
+        </a>
+        <ul class="navbar-menu">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Courses</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+        <div class="navbar-profile">
+          <a href="#">
+            <img src="img/perfil1.jpg" alt="User Avatar">
+            <p id="userName">John Doe</p>
+          </a>
+          <div class="navbar-profile-dropdown">
+            <a href="#">Profile</a>
+            <a href="#">Settings</a>
+            <a href="#" id="logoutLink">Logout</a>
+          </div>
+        </div>
+        <div class="navbar-burger" id="navbar-burger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+  <div class="container">
+    
+  </div>
+
+  <footer class="footer">
+    &copy; 2023 Formulário DevOps Learning Points - Todos os direitos reservados.
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      const userLink = document.getElementById("userLink");
+
+      const usuarioJSON = sessionStorage.getItem("UserSession");
+      
+      if (usuarioJSON) {
+
+        const nomeUsuario = JSON.parse(usuarioJSON).Name;
+        document.getElementById("userName").textContent = nomeUsuario;
+      }
+
+      $(document).ready(function() {
+
+        function getLearningPoints() {
+          $.ajax({
+            url: 'http://localhost:3000/devops-learning-points',
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+
+              $('.container').empty();
+  
+              data.forEach(function(point) {
+                if(point.Status == "pending"){
+
+                  var learningPointElement = $('<div class="learning-point" data-id="' + point.Number + '" +"data-status="' +'">');
+                    learningPointElement.append('<h2>' + "#" + point.Number + " " + point.Type + '</h2>');
+                  learningPointElement.append('<p>' + point.Descricao + '</p>');
+                  learningPointElement.append('<p>Tema: ' + point.Theme + '</p>');
+                  learningPointElement.append('<div class="actions">' +
+                    '<button class="approve-button"><i class="fas fa-check"></i></button>' +
+                    '<button class="reject-button"><i class="fas fa-times"></i></button>' +
+                    '<button class="delete-button"><i class="fas fa-trash"></i></button>' +
+                    '</div>');
+    
+                  $('.container').append(learningPointElement);
+                }
+              });
+  
+              $('.approve-button').click(function() {
+                var learningPoint = $(this).closest('.learning-point');
+                $.ajax({
+                  url: 'http://localhost:3000/devops-learning-points/status/'+learningPoint.data('id')+'/approved',
+                  method: 'PUT',
+                  success: function (data) {
+                    learningPoint.remove();
+                    console.log(data.message);
+                  },
+                  error: function (error) {
+                    console.error(error);
+                  }
+                });
+              });
+  
+              $('.reject-button').click(function() {
+                var learningPoint = $(this).closest('.learning-point');
+                learningPoint.data('status','rejected');
+                $.ajax({
+                  url: 'http://localhost:3000/devops-learning-points/status/'+learningPoint.data('id')+'/rejected',
+                  method: 'PUT',
+                  success: function (data) {
+                    learningPoint.remove();
+                    console.log(data.message); 
+                  },
+                  error: function (error) {
+                    console.error(error);
+                  }
+                });
+              });
+
+              $('.delete-button').click(function() {
+                var learningPoint = $(this).closest('.learning-point');
+                $.ajax({
+                  url: 'http://localhost:3000/devops-learning-points/'+learningPoint.data('id'),
+                  method: 'DELETE',
+                  success: function (data) {
+                    learningPoint.remove();
+                    console.log(data.message); 
+                  },
+                  error: function (error) {
+                    console.error(error);
+                  }
+                });
+              });
+            },
+            error: function(xhr, status, error) {
+              console.log('Erro ao obter os learning points:', error);
+            }
+          });
+        }
+  
+        getLearningPoints();
+      });
+
+
+      document.getElementById("logoutLink").addEventListener("click", logout);
+
+      function logout(event) {
+        event.preventDefault(); 
+      
+        sessionStorage.removeItem("UserSession");
+
+        window.location.href = "index.html";
+      }
+
+    </script>
+
+</body>
+</html>
